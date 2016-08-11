@@ -8,6 +8,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './Card.css';
 
 var Card = (props) => {
+  let score = (props.correct * 100) - (props.incorrect * 50)
   return  <div>
             <MuiThemeProvider>
               <Paper className='Card' zDepth={2}>
@@ -17,7 +18,6 @@ var Card = (props) => {
                         <div id='clock'>
                           <ReactCountdownClock 
                             seconds={props.time}
-                            showMilliseconds={true}
                             color="purple"
                             alpha={0.9}
                             size={100}
@@ -49,6 +49,7 @@ var Card = (props) => {
                         >
                           <XIcon className='xIcon' />
                         </Badge>
+                        <h3>Total score: {score}</h3>
                       </Col>
                   </Row>
                 </Grid>
