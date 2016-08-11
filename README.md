@@ -2,7 +2,7 @@
 
 A simple web app for math flash cards created for my younger sister after realizing my mother forgot to purchase some.
 
-[Demo](http://math.caseykolb.com)
+<a href="http://math.caseykolb.com" target="_blank">Demo</a>
 
 ## How To Run
 `npm install`
