@@ -13,7 +13,7 @@ var Card = (props) => {
               <Paper className='Card' zDepth={2}>
                 <Grid fluid>
                   <Row className='Card-Contents'>
-                      <Col xs={4} sm={4} md={4} lg={4} className='Countdown'>
+                      <Col xs={12} sm={4} md={4} lg={4} className='Countdown'>
                         <div id='clock'>
                           <ReactCountdownClock 
                             seconds={props.time}
@@ -25,7 +25,7 @@ var Card = (props) => {
                           />
                         </div>
                       </Col>
-                      <Col xs={4} sm={4} md={4} lg={4} className='Question'>
+                      <Col xs={12} sm={4} md={4} lg={4} className='Question'>
                         <h1>{props.question}</h1>
                         <TextField
                           name='Answer' 
@@ -34,7 +34,7 @@ var Card = (props) => {
                           onKeyDown={props.onSubmit.bind(this)}
                         />
                       </Col>
-                      <Col xs={4} sm={4} md={4} lg={4} className='Badges'>
+                      <Col xs={12} sm={4} md={4} lg={4} className='Badges'>
                         <Badge 
                           badgeContent={props.correct} 
                           secondary={true} 
