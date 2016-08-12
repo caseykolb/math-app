@@ -1,0 +1,31 @@
+.Milestone-Title {
+  font-family: 'Montez', cursive;
+  font-size: 48px;
+  padding-top: 20px;
+  color: white;
+}
+
+.Milestones {
+	position: relative;
+	display: inline-block;
+	height: auto;
+	margin-top: -30px;
+	z-index: -2;
+	color: white;
+}
+
+@media (min-width: 200px) {
+	.Milestones {
+		width: 100%;
+	}
+}
+
+@media (min-width: 1000px) {
+	.Milestones {
+		width: 25%;
+	}
+}
+
+.Milestone {
+	color: white;
+}

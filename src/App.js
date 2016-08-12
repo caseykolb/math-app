@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Card from './Card'
+import Milestones from './Milestones'
 import './App.css';
 
 class App extends Component {
@@ -11,8 +12,15 @@ class App extends Component {
       incorrect: 0,
       time: 15,
       question: null,
-      answer: null
+      answer: null,
+      milestones: [],
+      highScore: 0,
     }
+
+    this.milestones = [500, 1000, 5000, 10000, 20000, 50000]
+
+    this.handleFailure = this.handleFailure.bind(this);
+    this.checkAnswer = this.checkAnswer.bind(this);
   }
 
   componentDidMount() {
@@ -32,31 +40,65 @@ class App extends Component {
   }
 
   handleSuccess() {
-    this.setState({ correct: this.state.correct + 1 })
-    this.newQuestion();
+    this.setState({ 
+      correct: this.state.correct + 1,
+      time: (this.state.time > 3) ? this.state.time - 1 : this.state.time,
+    }, () => { 
+      this.checkMilestone();
+      this.newQuestion() 
+    })
   }
 
   handleFailure() {
-    this.setState({ incorrect: this.state.incorrect + 1 })
-    this.newQuestion();
+    this.setState({ 
+      incorrect: this.state.incorrect + 1,
+      time: this.state.time + 1
+    }, () => { 
+      this.checkMilestone();
+      this.newQuestion() 
+    })
   }
 
   newQuestion() {
     // random numbers between 1 and 12
     let x = Math.floor(Math.random() * 12) + 1;
     let y = Math.floor(Math.random() * 12) + 1;
+    let z = x * y;
 
-    let coinToss = (Math.floor(Math.random()) + 1) === 0 ? true : false;
-    let answer = coinToss ? (x / y) : (x * y);
-    let operator = coinToss ? '/' : 'x';
+    let coinToss = Math.random() < 0.5 ? true : false;
 
-    this.setState({
-      question: x.toString() + ' ' + operator + ' ' + y.toString() + ' =',
-      answer: answer 
-    })
+    // multiplication
+    if (coinToss) {
+      this.setState({
+        question: x.toString() + ' x ' + y.toString() + ' =',
+        answer: z
+      })
+    }
+    // division
+    else {
+      this.setState({
+        question: z.toString() + ' / ' + y.toString() + ' =',
+        answer: x
+      })
+    }
     return 
   }
-  
+
+  checkMilestone() {
+    let playerMilestones = this.state.milestones;
+    let score = (this.state.correct * 100) - (this.state.incorrect * 50);
+
+    for (var milestone of this.milestones) {
+      if (score >= milestone && this.state.milestones.indexOf(milestone) == -1)
+        playerMilestones.push(milestone)
+    }
+
+    this.setState({ 
+      milestones: playerMilestones,
+      highScore: (score > this.state.highScore) ? score: this.state.highScore
+    })
+  }
+
   render() {
     return (
       <div className='App'>
@@ -66,8 +108,12 @@ class App extends Component {
           time={this.state.time}
           correct={this.state.correct}
           incorrect={this.state.incorrect}
-          onFailure={this.handleFailure.bind(this)}
-          onSubmit={this.checkAnswer.bind(this)}
+          highScore={this.state.highScore}
+          onFailure={this.handleFailure}
+          onSubmit={this.checkAnswer}
+        />
+        <Milestones 
+          milestones={this.state.milestones}
         />
       </div>
     );

@@ -1,17 +1,17 @@
 import React from 'react';
-import { Paper, TextField, Badge } from 'material-ui';
+import { Paper, Badge } from 'material-ui';
 import { Grid, Row, Col } from 'react-bootstrap'
 import CheckIcon from 'material-ui/svg-icons/action/done';
 import XIcon from 'material-ui/svg-icons/content/add';
-import ReactCountdownClock from 'react-countdown-clock';
+import ReactCountdownClock from './third-party/react-countdown-clock';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './Card.css';
 
-var Card = (props) => {
+const Card = (props) => {
   let score = (props.correct * 100) - (props.incorrect * 50)
   return  <div>
             <MuiThemeProvider>
-              <Paper className='Card' zDepth={2}>
+              <Paper className='Card' zDepth={2} style={{backgroundColor: 'rgba(255, 255, 255, 0.9)'}}>
                 <Grid fluid>
                   <Row className='Card-Contents'>
                       <Col xs={12} sm={4} md={4} lg={4} className='Countdown'>
@@ -27,11 +27,12 @@ var Card = (props) => {
                       </Col>
                       <Col xs={12} sm={4} md={4} lg={4} className='Question'>
                         <h1>{props.question}</h1>
-                        <TextField
-                          name='Answer' 
-                          hintText='Answer'
-                          style={{width: 60}}
-                          onKeyDown={props.onSubmit.bind(this)}
+                        <input
+                          autoFocus={true}
+                          placeholder='Answer'
+                          maxLength={3}
+                          style={{width: 80, fontSize: 18}}
+                          onKeyDown={props.onSubmit}
                         />
                       </Col>
                       <Col xs={12} sm={4} md={4} lg={4} className='Badges'>
@@ -49,7 +50,8 @@ var Card = (props) => {
                         >
                           <XIcon className='xIcon' />
                         </Badge>
-                        <h3>Total score: {score}</h3>
+                        <h3><span className='Score'>Total score:</span> {score}</h3>
+                        <h3><span className='High-Score'>High score:</span> {props.highScore}</h3>
                       </Col>
                   </Row>
                 </Grid>
